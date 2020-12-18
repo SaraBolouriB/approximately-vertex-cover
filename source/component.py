@@ -16,6 +16,7 @@ def connectedComponents(graph):
     for v in range(vNumber):
         if visited[v] == False:
             temp = []
-            cc.append(DFS(v, graph, visited, temp))
-
-    return len(cc)
+            result = DFS(v, graph, visited, temp)
+            if len(result) > 1:
+                cc.append(result)
+    return len(cc), cc

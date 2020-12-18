@@ -7,13 +7,13 @@ def dijkstra(source, graph, graphL):
         2. initial source vertex to 0   
         3. initial other vertices to MAXSIZE
     '''
+    graphL.append(source)
     vertices = len(graph[0])
     dist = [sys.maxsize] * vertices
     dist[source] = 0
     watchedVertices = [False] * vertices
     for i in range(vertices):
         watchedVertices[i] = None if i not in graphL else False
-
     for v in range(vertices):
         if v in graphL:
             min = minDistance(dist, watchedVertices)
@@ -23,7 +23,7 @@ def dijkstra(source, graph, graphL):
                 if graph[min][u] > 0 and watchedVertices[u] == False:
                     if dist[min] + graph[min][u] < dist[u]:
                         dist[u] = dist[min] + graph[min][u]
-        else:
+        elif v is not source:
             dist[v] = -1
     return dist
     
