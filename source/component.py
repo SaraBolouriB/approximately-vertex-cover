@@ -1,3 +1,5 @@
+from vertex_cover_methods import generate_H
+
 def DFS(source, graph, visited, temp):
     temp.append(source)
     vertices = len(graph[source])
@@ -20,3 +22,12 @@ def connectedComponents(graph):
             if len(result) > 1:
                 cc.append(result)
     return len(cc), cc
+
+def components_count(vertices, graph):
+    counts = []
+    for vertex in vertices:
+        new_graph = generate_H(graph=graph, S=[vertex])
+        cc_count, cc = connectedComponents(graph=new_graph)
+        counts.append(cc_count)
+
+    return counts
