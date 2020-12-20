@@ -1,4 +1,4 @@
-def calculate_degrees_T(indexList, graph):
+def calculate_degrees_list(indexList, graph):
     all_degree = calculate_degrees(graph=graph)
     degree_T = [all_degree[i] for i in range(len(graph[0])) if i in indexList]
     return degree_T
@@ -40,22 +40,22 @@ def is_isolated_graph(graph):
     is_iso = True if vertices == iso_count else False    
     return is_iso, isolated_v
 
-def generate_H(G, S):
+def generate_H(graph, S):
     '''
         1. Original graph is G = (V, E)
         2. Vertex-Cover set is S
         3. Generate graph H which is H = G - S
     '''
-    G = list(map(list, G))
-    lenG = len(G[0])
+    graph = list(map(list, graph))
+    lenG = len(graph[0])
     for s in S:
         for vertex in range(lenG):
-            if G[s][vertex] == 1:
-                G[s][vertex] = -1
-                G[vertex][s] = 0
+            if graph[s][vertex] == 1:
+                graph[s][vertex] = -1
+                graph[vertex][s] = 0
             else:
-                G[s][vertex] = -1
-    return G
+                graph[s][vertex] = -1
+    return graph
 
 def generate_L(G, S, iso_set):
     '''
@@ -68,7 +68,7 @@ def generate_L(G, S, iso_set):
     lenG = len(G[0])
     L = list()
     for vertex in range(lenG):
-        if vertex not in S and vertex not in iso_set:
+        if vertex not in S and vertex not in iso_set and G[vertex][0] != -1:
             L.append(vertex)
     return L
     
@@ -94,7 +94,10 @@ def sub_graph(vertices, graph):
         if v not in vertices:
             for u in range(lenG):
                 graph[v][u] = -1
-                graph[u][v] = 0
+        else:
+            for u in range(lenG):
+                if u not in vertices:
+                    graph[v][u] = 0
     return graph
 
 def remove_parent(leafages, H):
@@ -107,3 +110,12 @@ def remove_parent(leafages, H):
             parents.append(parent_node)
             
     return parents
+
+def components_count(vertices, graph):
+    counts = []
+    for vertex in vertices:
+        new_graph = generate_H(graph=graph, S=[vertex])
+        cc_count, cc = connectedComponents(graph=new_graph)
+        counts.append(cc_count)
+
+    return counts
