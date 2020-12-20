@@ -3,9 +3,8 @@ from component import *
 import random
 from vertex_cover_methods import *
 
-def compute_vertex_cover(init, graph):
+def compute_vertex_cover(init, original_graph):
 
-    original_graph = tuple(map(tuple, graph))                               # Convert to unchangable variable
     vertices = len(original_graph[0])                                       # Number of graph vertices 
 
     ## Step 1 ------------------------------------------------------------------------------------------------------
@@ -30,7 +29,7 @@ def compute_vertex_cover(init, graph):
         if is_disjoint != 1:                                                # if it is true, algorithm will be run for each component 
             for component in components:
                 sub_G = sub_graph(vertices=component, graph=original_graph)
-                vc = compute_vertex_cover(init=random.choice(component), graph=sub_G)
+                vc = compute_vertex_cover(init=random.choice(component), original_graph=sub_G)
                 S.extend(vc)
                 Ss.extend(vc)
     
@@ -57,21 +56,23 @@ def compute_vertex_cover(init, graph):
     # --------------------------------------------------------------------------------------------------------------
     ## Step 4 ------------------------------------------------------------------------------------------------------
                     d = max(dist)
-        ## Step 5 ------------------------------------------------------------------------------------------------------
+        ## Step 5 ---------------------------------------------------------------------------------------------------h---
                     if d > 1:
-                        T = [ i for i in range(vertices) if dist[i] == d - 1 ]
-                        all_cc_counts = components_count(vertices=T, graph=H)
-                        if all_the_same(all_cc_counts):
-                            degree_T = calculate_degrees_list(indexList=T, graph=H)
-                            if all_the_same(degree_T):
-                                init = min(T)                                   # vertex with minimum label
+                        try:
+                            T = [ i for i in range(vertices) if dist[i] == d - 1 ]
+                            all_cc_counts = components_count(vertices=T, graph=H)
+                            if all_the_same(all_cc_counts):
+                                degree_T = calculate_degrees_list(indexList=T, graph=H)
+                                if all_the_same(degree_T):
+                                    init = min(T)                                   # vertex with minimum label
+                                else:
+                                    index = degree_T.index(max(degree_T))           # vertex with maximum degree
+                                    init = T[index]
                             else:
-                                index = degree_T.index(max(degree_T))           # vertex with maximum degree
+                                index = all_cc_counts.index(min(all_cc_counts))     # vertex with minimum connectec component
                                 init = T[index]
-                        else:
-                            index = all_cc_counts.index(min(all_cc_counts))     # vertex with minimum connectec component
-                            init = T[index]
-
+                        except (ValueError, TypeError):
+                            return 'Try angain please!'
                         S.append(init)
         # --------------------------------------------------------------------------------------------------------------
         ## Step 6 ------------------------------------------------------------------------------------------------------
