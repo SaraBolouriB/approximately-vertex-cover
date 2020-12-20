@@ -33,7 +33,7 @@ if __name__ == "__main__":
     numberOfVertices = len(graph)
     minVC = -1
     init = -1
-    ## it runs for all vertex
+    ## it runs for all vertices
     for init in range(numberOfVertices):
         VC = compute_vertex_cover(init=init , original_graph=original_graph) 
         print('vertex:', (init + 1), ' -> ', VC ,' -> ', len(VC))
