@@ -82,6 +82,17 @@ def find_leafage(graph):
         index += 1
     return leafages
 
+def remove_parent(leafages, H):
+    parents = []
+    leafs = []
+    for l in leafages:
+        leafs.append(l)
+        parent_node = H[l].index(1)
+        if parent_node not in parents and parent_node not in leafs:
+            parents.append(parent_node)
+            
+    return parents
+
 def all_the_same(elements):
    if len(elements) < 1:
        return True
@@ -99,23 +110,3 @@ def sub_graph(vertices, graph):
                 if u not in vertices:
                     graph[v][u] = 0
     return graph
-
-def remove_parent(leafages, H):
-    parents = []
-    leafs = []
-    for l in leafages:
-        leafs.append(l)
-        parent_node = H[l].index(1)
-        if parent_node not in parents and parent_node not in leafs:
-            parents.append(parent_node)
-            
-    return parents
-
-def components_count(vertices, graph):
-    counts = []
-    for vertex in vertices:
-        new_graph = generate_H(graph=graph, S=[vertex])
-        cc_count, cc = connectedComponents(graph=new_graph)
-        counts.append(cc_count)
-
-    return counts
