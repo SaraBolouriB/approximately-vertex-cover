@@ -28,7 +28,12 @@ if __name__ == "__main__":
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0],
     ]
-    init = 1
 
-    VC = compute_vertex_cover(init=init, graph=graph)
-    print(VC)
+    original_graph = tuple(map(tuple, graph))
+    numberOfVertices = len(graph)
+    minVC = -1
+    init = -1
+    ## it runs for all vertex
+    for init in range(numberOfVertices):
+        VC = compute_vertex_cover(init=init , original_graph=original_graph) 
+        print('vertex:', (init + 1), ' -> ', VC ,' -> ', len(VC))
