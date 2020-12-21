@@ -77,17 +77,17 @@ def compute_vertex_cover(init, original_graph):
         # --------------------------------------------------------------------------------------------------------------
         ## Step 6 ------------------------------------------------------------------------------------------------------
                     elif d == 1:
-                        H = generate_H(G=graph, S=S)
-                        cc_count, cc = connectedComponents(graph=H)
-                        if cc_count != 1:
-                            is_disjoint = True
+                        H = generate_H(graph=graph, S=S)
+                        is_disjoint, components = connectedComponents(graph=H)
+                        if is_disjoint != 1:
+                            return S
                         else:
                             degree_H = calculate_degrees(graph=H)
                             if all_the_same(degree_H):
                                 init = min(L)
                             else:
                                 init = degree_H.index(max(degree_H))
-                                S.append(init)
+                        S.append(init)
         # --------------------------------------------------------------------------------------------------------------
     # --------------------------------------------------------------------------------------------------------------
     return S
