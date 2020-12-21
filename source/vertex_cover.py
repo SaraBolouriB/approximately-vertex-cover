@@ -82,12 +82,15 @@ def compute_vertex_cover(init, original_graph):
                         if is_disjoint != 1:
                             return S
                         else:
-                            degree_H = calculate_degrees(graph=H)
-                            if all_the_same(degree_H):
-                                init = min(L)
-                            else:
-                                init = degree_H.index(max(degree_H))
-                        S.append(init)
+                            try:
+                                degree_H = calculate_degrees(graph=H)
+                                if all_the_same(degree_H):
+                                    init = min(L)
+                                else:
+                                    init = degree_H.index(max(degree_H))
+                                S.append(init)
+                            except (ValueError, TypeError):
+                                return 'Try angain please!'        
         # --------------------------------------------------------------------------------------------------------------
     # --------------------------------------------------------------------------------------------------------------
     return S
