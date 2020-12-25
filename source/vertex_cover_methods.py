@@ -2,7 +2,7 @@ def calculate_degrees_list(indexList, graph, lenG):
     all_degree = calculate_degrees(graph=graph, lenG=lenG)
     degree_T = [all_degree[i] for i in range(lenG) if i in indexList]
     return degree_T
-##
+
 def calculate_degrees(graph, lenG):
     degree = [0 for i in range(lenG)]
 
@@ -16,11 +16,11 @@ def calculate_degrees(graph, lenG):
             deg = len(graph[v])
         degree[v] = deg
     return degree
-##
+
 def is_isolated_vertex(vertex, graph):
     no_edges = len(graph[vertex])
     return True if no_edges == 0 else False
-##
+
 def is_isolated_graph(graph, lenG):
     isolated_v = []             # Isolated vertices set
     all_degrees = calculate_degrees(graph=graph, lenG=lenG)
@@ -36,7 +36,7 @@ def is_isolated_graph(graph, lenG):
     lenG -= no_verex
     is_iso = True if lenG == iso_count else False    
     return is_iso, isolated_v
-##
+
 def generate_H(graph, S, lenG):
     '''
         1. Original graph is G = (V, E)
@@ -50,7 +50,7 @@ def generate_H(graph, S, lenG):
             graph[node].remove(s) 
         graph[s] = [-1]
     return graph
-##
+
 def generate_L(G, S, iso_set, lenG):
     '''
         1. Original graph is G = (V, E)
@@ -64,7 +64,7 @@ def generate_L(G, S, iso_set, lenG):
         if vertex not in S and vertex not in iso_set and G[vertex][0] != -1:
             L.append(vertex)
     return L
-##
+
 def find_leafage(graph, lenG):
     all_degrees = calculate_degrees(graph=graph, lenG=lenG)
     leafages = list()
@@ -74,7 +74,7 @@ def find_leafage(graph, lenG):
             leafages.append(index)
         index += 1
     return leafages
-##
+
 def remove_parent(leafages, H):
     parents = []
     leafs = []
@@ -90,7 +90,7 @@ def all_the_same(elements):
    if len(elements) < 1:
        return True
    return len(elements) == elements.count(elements[0])
-##
+
 def sub_graph(vertices, graph, lenG):
     sub_graph = []
 

@@ -5,7 +5,7 @@ from vertex_cover_methods import *
 
 def compute_vertex_cover(init, graph):
     original_graph = tuple(map(tuple, graph))
-    lenG = len(original_graph)                                       # Number of graph vertices 
+    lenG = len(original_graph)                                              # Number of graph vertices 
 
     ## Step 1 ------------------------------------------------------------------------------------------------------
     # Initializing -------------------------------------------------------------------------------------------------
@@ -15,8 +15,8 @@ def compute_vertex_cover(init, graph):
     # End initializing ---------------------------------------------------------------------------------------------
 
     while True:
-        H = generate_H(graph=original_graph, S=S, lenG=lenG)                           # Generate H = graph - S  
-        is_isolated, isolated_v = is_isolated_graph(graph=H, lenG=lenG)                      # Return check result and isolated vertices
+        H = generate_H(graph=original_graph, S=S, lenG=lenG)                # Generate H = graph - S  
+        is_isolated, isolated_v = is_isolated_graph(graph=H, lenG=lenG)     # Return check result and isolated vertices
 
         Ss.extend([iso for iso in isolated_v if iso not in Ss])             # Update Ss set
 
@@ -24,9 +24,9 @@ def compute_vertex_cover(init, graph):
         if is_isolated:
             return S                                                        # Return vertex-cover set (S)
     ## Step 2 ------------------------------------------------------------------------------------------------------
-        is_disjoint, components = connectedComponents(graph=H, lenG=lenG)              # Return check result and all components set
+        is_disjoint, components = connectedComponents(graph=H, lenG=lenG)   # Return check result and all components set
 
-        if is_disjoint > 1:                                                # if it is true, algorithm will be run for each component 
+        if is_disjoint > 1:                                                 # if it is true, algorithm will be run for each component 
             for component in components:
                 sub_G = sub_graph(vertices=component, graph=original_graph, lenG=lenG)
                 vc = compute_vertex_cover(init=random.choice(component), graph=sub_G)
@@ -43,11 +43,11 @@ def compute_vertex_cover(init, graph):
     ## Step 3 ------------------------------------------------------------------------------------------------------
             else:
                 L = generate_L(G=original_graph, S=S, iso_set=isolated_v, lenG=lenG)
-                Hh = generate_H(graph=original_graph, S=Ss, lenG=lenG)                     # calculated H without init
+                Hh = generate_H(graph=original_graph, S=Ss, lenG=lenG)       # calculated H without init
 
                 if is_isolated_vertex(init, Hh):
                     degree_L = calculate_degrees_list(indexList=L, graph=H, lenG=lenG)
-                    index = degree_L.index(max(degree_L))                       # vertex with maximum degree in L
+                    index = degree_L.index(max(degree_L))                    # vertex with maximum degree in L
                     init = L[index]
                     S.append(init)
                 else:
@@ -56,7 +56,7 @@ def compute_vertex_cover(init, graph):
     # --------------------------------------------------------------------------------------------------------------
     ## Step 4 ------------------------------------------------------------------------------------------------------
                     d = max(dist)
-        ## Step 5 ---------------------------------------------------------------------------------------------------h---
+        ## Step 5 --------------------------------------------------------------------------------------------------
                     if d > 1:
                         try:
                             T = [ i for i in range(lenG) if dist[i] == d - 1 ]
@@ -96,5 +96,5 @@ def compute_vertex_cover(init, graph):
                             except (ValueError, TypeError):
                                 return 'Try angain please!'        
         # --------------------------------------------------------------------------------------------------------------
-    # --------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     return S
