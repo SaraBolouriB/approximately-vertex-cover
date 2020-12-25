@@ -3,8 +3,8 @@ from standard_input import generate_random_graph
 import time
 
 if __name__ == "__main__":
-    node = 2000
-    edge = 6000
+    node = 100
+    edge = 4500
     
     init = 0
     graph = generate_random_graph(node=node, edge=edge)
