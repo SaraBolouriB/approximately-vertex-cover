@@ -1,6 +1,6 @@
 import sys
 
-def dijkstra(source, graph, graphL):
+def dijkstra(source, graph, graphL, lenG):
     '''
         Find the shortes path in "graph" from "source"
         1. Find number of vertices
@@ -8,27 +8,26 @@ def dijkstra(source, graph, graphL):
         3. initial other vertices to MAXSIZE
     '''
     graphL.append(source)
-    vertices = len(graph[0])
-    dist = [sys.maxsize] * vertices
+    dist = [sys.maxsize] * lenG
     dist[source] = 0
-    watchedVertices = [False] * vertices
-    for i in range(vertices):
+    watchedVertices = [False] * lenG
+    for i in range(lenG):
         watchedVertices[i] = None if i not in graphL else False
-    for v in range(vertices):
+    for v in range(lenG):
         if v in graphL:
-            min = minDistance(dist, watchedVertices)
+            min = minDistance(dist, watchedVertices, lenG)
             watchedVertices[min] = True
 
-            for u in range(vertices):
-                if graph[min][u] > 0 and watchedVertices[u] == False:
-                    if dist[min] + graph[min][u] < dist[u]:
-                        dist[u] = dist[min] + graph[min][u]
+            nodes = graph[min]
+            for u in nodes:
+                if watchedVertices[u] == False:
+                    if dist[min] + 1 < dist[u]:
+                        dist[u] = dist[min] + 1
         elif v is not source:
             dist[v] = -1
     return dist
     
-def minDistance(dist, watchedVertices):
-    numV = len(dist)
+def minDistance(dist, watchedVertices, numV):
     min = sys.maxsize
     index = -1
     for v in range(numV):
