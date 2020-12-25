@@ -3,8 +3,8 @@ from standard_input import generate_random_graph
 import time
 
 if __name__ == "__main__":
-    node = 100
-    edge = 2000
+    node = 2000
+    edge = 6000
     
     init = 0
     graph = generate_random_graph(node=node, edge=edge)
@@ -14,6 +14,5 @@ if __name__ == "__main__":
     end_time = time.time()
 
     ## PRINT OUTPUTS ----------------------------------------------
-    print("The Vertex Cover: ", VC)
-    print("Number Of Vertices:", len(VC))
-    print("Time: ",end_time - start_time)
+    print("Number Of Node: ", node, "\nNumber Of Egde: ", edge, "\nTime: ",end_time - start_time, "\n----------------------------")
+    print("The Vertex Cover: ", VC, "\nNumber Of Vertex-Cover Node:", len(VC))
